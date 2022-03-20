@@ -1,0 +1,25 @@
+City,District,Institute,Transport cost
+Moscow,Novokosino,MIREA,40
+Moscow,Novomosino,MIREA,45
+Moscow,Centralny,MIREA,34
+Moscow,Periferijny,MIREA,42
+Moscow,Bogorodskoe,MIREA,55
+Moscow,Metrogorodok,MIREA,67
+Moscow,Izmailovo,MIREA,52
+Moscow,Golianovo,MIREA,67
+Moscow,Koptevo,MIREA,57
+Moscow,Zamoskvorechje,MIREA,44
+Moscow,Kapotnia,MIREA,58
+Moscow,Novoogarevo,MIREA,80
+Moscow,Novokosino,MEI,43
+Moscow,Novomosino,MEI,48
+Moscow,Centralny,MEI,29
+Moscow,Periferijny,MEI,39
+Moscow,Bogorodskoe,MEI,51
+Moscow,Metrogorodok,MEI,68
+Moscow,Izmailovo,MEI,50
+Moscow,Golianovo,MEI,63
+Moscow,Koptevo,MEI,55
+Moscow,Zamoskvorechje,MEI,48
+Moscow,Kapotnia,MEI,52
+Moscow,Novoogarevo,MEI,77
