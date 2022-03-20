@@ -18,7 +18,7 @@ class DatabaseHandler
         int getWorkdayCost(const string& city, const string& homeAddress, const string& institute);
         int getWeekandCost(const string& city, const string& cinema, const string& coffee);
     private:
-        int getHomeFoodCost(const string& _Get_const_void_pointer_type);
+        int getHomeFoodCost(const string& city);
         int getCinemaCost(const string& city, const string& cinema);
         int getCoffeeCost(const string& city, const string& coffee);
         int getInstituteDinnerCost(const string& city, const string& institute);

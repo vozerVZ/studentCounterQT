@@ -47,7 +47,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Вораст</string>
+     <string>Вораст:</string>
     </property>
    </widget>
    <widget class="QSlider" name="horizontalSlider">
@@ -136,6 +136,9 @@
       <height>26</height>
      </rect>
     </property>
+    <property name="duplicatesEnabled">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QComboBox" name="comboBoxDistrict">
     <property name="geometry">
@@ -170,10 +173,10 @@
    <widget class="QPushButton" name="pushButtonCalculate">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>20</y>
-      <width>341</width>
-      <height>181</height>
+      <x>430</x>
+      <y>320</y>
+      <width>311</width>
+      <height>71</height>
      </rect>
     </property>
     <property name="font">
@@ -186,6 +189,162 @@
      <string>Расчитать</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButtonTransport">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>50</y>
+      <width>80</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выбрать...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>77</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Транспорт:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>90</y>
+      <width>92</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Рабочие дни:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonWorkdays">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>120</y>
+      <width>80</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выбрать...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>160</y>
+      <width>89</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Кафе и кино:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonCafe">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>190</y>
+      <width>80</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выбрать...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_10">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>230</y>
+      <width>42</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Цены:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonCosts">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>260</y>
+      <width>80</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выбрать...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_11">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>300</y>
+      <width>75</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Институты:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButtonInstitutes">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>330</y>
+      <width>80</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Выбрать...</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_transport">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>20</y>
+      <width>431</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_age">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>80</y>
+      <width>61</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>18</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -193,7 +352,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>

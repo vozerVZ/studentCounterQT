@@ -19,6 +19,10 @@ public:
 private slots:
     void on_pushButtonCalculate_clicked();
 
+    void on_pushButtonTransport_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
     void loadTips();

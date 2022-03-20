@@ -11,7 +11,7 @@ void readcsv(const string& filename, vector<vector<string>>& arr){
     ifstream fs(filename);
     if (!fs.is_open())
     {
-        cout << "File not opened" << endl;
+        cout << "File not opened: "<< filename << endl;
         return;
     }
     string BigStr;
