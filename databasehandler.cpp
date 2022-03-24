@@ -7,8 +7,8 @@
 
 
 
-void readcsv(const string& filename, vector<vector<string>>& arr){
-    ifstream fs(filename);
+void DatabaseHandler::readcsv(const string& filename, vector<vector<string>>& arr){
+    ifstream fs(workDir+filename);
     if (!fs.is_open())
     {
         cout << "File not opened: "<< filename << endl;
@@ -27,6 +27,10 @@ void readcsv(const string& filename, vector<vector<string>>& arr){
         arr.push_back(selements);
         selements.clear();
     }
+}
+
+void DatabaseHandler::setWorkDir(string _workDir){
+    workDir = _workDir;
 }
 
 int DatabaseHandler::getWorkdays(int month){

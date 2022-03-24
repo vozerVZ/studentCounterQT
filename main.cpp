@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
 {
     cout << "Current working directory: " << current_path() << endl;
     QApplication a(argc, argv);
-    MainWindow w;
+    DatabaseHandler db;
+    MainWindow w(db);
     w.show();
 
     return a.exec();

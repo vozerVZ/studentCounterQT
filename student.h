@@ -2,7 +2,7 @@
 #define STUDENT_H
 
 using namespace std;
-#include "DatabaseHandler.h"
+#include "databaseHandler.h"
 #include <string>
 #include <iostream>
 #include <fstream>
