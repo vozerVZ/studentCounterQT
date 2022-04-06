@@ -68,7 +68,7 @@ void MainWindow::on_horizontalSliderAge_valueChanged(int value)
 void MainWindow::on_pushButtonWorkDir_clicked()
 {
     QString workDir = QFileDialog::getExistingDirectory();
-    db.setWorkDir(workDir.toStdString());
+    db.setWorkDir(workDir.toStdString().append("/"));
     loadTips();
     ui->label_dir->setText(workDir);
     ui->label_dir->adjustSize();
