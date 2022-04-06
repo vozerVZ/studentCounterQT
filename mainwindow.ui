@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>578</width>
-    <height>543</height>
+    <height>597</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -299,6 +299,29 @@
     </property>
     <property name="text">
      <string>1</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>490</y>
+      <width>91</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Институт</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxInstitute">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>520</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
     </property>
    </widget>
   </widget>
