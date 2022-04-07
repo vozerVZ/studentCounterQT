@@ -1,11 +1,11 @@
 #ifndef STUDENT_H
 #define STUDENT_H
 
-using namespace std;
 #include "databaseHandler.h"
 #include <string>
 #include <iostream>
 #include <fstream>
+using namespace std;
 
 class Student{
     private:

@@ -1,8 +1,9 @@
 #include "student.h"
-using namespace std;
 #include <string>
 #include <iostream>
 #include <fstream>
+using namespace std;
+
 
 Student::Student(int _age, string _name){
     age = _age;

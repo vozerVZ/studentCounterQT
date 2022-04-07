@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="label_name">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -37,7 +37,7 @@
      <string>Имя</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="label_text_age">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -75,7 +75,7 @@
      <number>1</number>
     </property>
    </widget>
-   <widget class="QLabel" name="label_3">
+   <widget class="QLabel" name="label_city">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -88,7 +88,7 @@
      <string>Город</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_4">
+   <widget class="QLabel" name="label_dist">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -101,7 +101,7 @@
      <string>Район</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLabel" name="label_caffee">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -114,7 +114,7 @@
      <string>Кафе</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_6">
+   <widget class="QLabel" name="label_cinema">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -202,7 +202,7 @@
      <string>Выбрать...</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_7">
+   <widget class="QLabel" name="label_workdir">
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -275,7 +275,7 @@
      <number>1</number>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="label_month_2">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -301,7 +301,7 @@
      <string>1</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_9">
+   <widget class="QLabel" name="label_inst">
     <property name="geometry">
      <rect>
       <x>40</x>
@@ -331,7 +331,7 @@
      <x>0</x>
      <y>0</y>
      <width>578</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

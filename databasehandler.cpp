@@ -6,7 +6,6 @@
 #include <sstream>
 
 
-
 void DatabaseHandler::readcsv(const string& filename, vector<vector<string>>& arr){
     ifstream fs(workDir+filename);
     if (!fs.is_open())

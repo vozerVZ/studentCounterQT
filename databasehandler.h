@@ -1,12 +1,11 @@
 #ifndef DATABASEHANDLER_H
 #define DATABASEHANDLER_H
 
-using namespace std;
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
-
+using namespace std;
 
 
 class DatabaseHandler
