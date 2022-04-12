@@ -1,12 +1,17 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "databasehandler.h"
+#include "csvedit.h"
 #include "student.h"
 #include <vector>
 #include <iostream>
 #include <QComboBox>
 #include <QMessageBox>
 
+
+using std::cout; using std::cin;
+using std::endl; using std::string;
+using std::filesystem::directory_iterator;
 
 MainWindow::MainWindow(DatabaseHandler& db, QWidget* parent)
     : QMainWindow(parent)
@@ -70,7 +75,14 @@ void MainWindow::on_horizontalSliderAge_valueChanged(int value){
 
 void MainWindow::on_pushButtonWorkDir_clicked(){
     QString workDir = QFileDialog::getExistingDirectory();
-    _db.setWorkDir(workDir.toStdString().append("/"));
+    std::string path = workDir.toStdString().append("/");
+    for (const auto & file : directory_iterator(path)){
+        std::string efilename = file.path().filename().string();
+        if(efilename.find(".csv")!= std::string::npos){
+            ui->comboBoxFile->addItem(QString::fromStdString(efilename));
+        }
+    }
+    _db.setWorkDir(path);
     loadTips();
     ui->label_dir->setText(workDir);
     ui->label_dir->adjustSize();
@@ -79,5 +91,17 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
 
 void MainWindow::on_horizontalSliderMonth_valueChanged(int value){
     ui->label_month->setText(QString::number(value));
+}
+
+
+
+
+
+void MainWindow::on_buttonEdit_clicked()
+{
+    std::string efilename = ui->comboBoxFile->currentText().toStdString();
+    CsvEdit csvedit(efilename, _db);
+    csvedit.setModal(true);
+    csvedit.exec();
 }
 

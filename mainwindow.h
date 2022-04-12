@@ -26,6 +26,8 @@ private slots:
 
     void on_horizontalSliderMonth_valueChanged(int value);
 
+    void on_buttonEdit_clicked();
+
 private:
     DatabaseHandler _db;
     Ui::MainWindow* ui;

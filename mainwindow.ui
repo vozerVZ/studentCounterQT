@@ -7,11 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>578</width>
-    <height>597</height>
+    <height>603</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLineEdit" name="lineName">
@@ -185,6 +188,9 @@
       <bold>true</bold>
      </font>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="text">
      <string>Расчитать</string>
     </property>
@@ -319,6 +325,29 @@
      <rect>
       <x>40</x>
       <y>520</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonEdit">
+    <property name="geometry">
+     <rect>
+      <x>422</x>
+      <y>500</y>
+      <width>121</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Редактировать</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBoxFile">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>500</y>
       <width>151</width>
       <height>26</height>
      </rect>
