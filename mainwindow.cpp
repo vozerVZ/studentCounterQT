@@ -6,6 +6,8 @@
 #include <vector>
 #include <iostream>
 #include <QComboBox>
+#include <QCompleter>
+
 #include <QMessageBox>
 
 
@@ -18,6 +20,7 @@ MainWindow::MainWindow(DatabaseHandler& db, QWidget* parent)
     , ui(new Ui::MainWindow){
     _db = db;
     ui->setupUi(this);
+
 }
 
 MainWindow::~MainWindow(){
@@ -27,6 +30,11 @@ MainWindow::~MainWindow(){
 void MainWindow::loadTips(){
     vector<vector<std::string>> cities;
     _db.readcsv("Caffe-and-cinema.csv", cities);
+    ui->comboBoxCity->clear();
+    ui->comboBoxDistrict->clear();
+    ui->comboBoxCafe->clear();
+    ui->comboBoxCinema->clear();
+    ui->comboBoxInstitute->clear();
     for(std::size_t i = 1; i < cities.size(); i++){
         if(ui->comboBoxCity->findText(QString::fromStdString(cities[i][0])) == -1){
             ui->comboBoxCity->addItem(QString::fromStdString(cities[i][0]));
@@ -48,13 +56,18 @@ void MainWindow::loadTips(){
             ui->comboBoxInstitute->addItem(QString::fromStdString(institute[i][1]));
         }
     }
+    QStringList wordList;
+    wordList << "alpha" << "omega" << "omicron" << "zeta";
+    QCompleter *test = new QCompleter(wordList);
+
+    ui->lineMonth->setCompleter(test);
 }
 
 void MainWindow::on_pushButtonCalculate_clicked(){
     int age = ui->label_age->text().toInt();
     std::string name = ui->lineName->text().toStdString();
     Student student(age, name);
-    int month = ui->label_month->text().toInt();
+    int month = 2;
     std::string city = ui->comboBoxCity->currentText().toStdString();
     std::string homeAddress = ui->comboBoxDistrict->currentText().toStdString();
     std::string cinema = ui->comboBoxCinema->currentText().toStdString();
@@ -89,10 +102,6 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
 }
 
 
-void MainWindow::on_horizontalSliderMonth_valueChanged(int value){
-    ui->label_month->setText(QString::number(value));
-}
-
 
 
 
@@ -100,8 +109,9 @@ void MainWindow::on_horizontalSliderMonth_valueChanged(int value){
 void MainWindow::on_buttonEdit_clicked()
 {
     std::string efilename = ui->comboBoxFile->currentText().toStdString();
-    CsvEdit csvedit(efilename, _db);
+    CsvEdit csvedit(efilename, _db, this);
     csvedit.setModal(true);
     csvedit.exec();
+    loadTips();
 }
 

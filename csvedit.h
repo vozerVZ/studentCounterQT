@@ -24,7 +24,7 @@ private:
     std::string _filename;
     DatabaseHandler _db;
     void LoadTable();
-    void WriteTable(vector<vector<std::string>> &data);
+    void WriteTable(vector<vector<QString>> data);
 };
 
 #endif // CSVEDIT_H

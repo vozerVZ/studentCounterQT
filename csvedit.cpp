@@ -1,8 +1,12 @@
 #include "csvedit.h"
 #include "ui_csvedit.h"
 #include <vector>
-
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
 using std::vector;
+using std::size_t;
+
 
 CsvEdit::CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent) :
     QDialog(parent),
@@ -13,6 +17,7 @@ CsvEdit::CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent) :
     _db = db;
     ui->setupUi(this);
     LoadTable();
+    this->setParent(parent);
 }
 
 CsvEdit::~CsvEdit()
@@ -42,32 +47,39 @@ void CsvEdit::LoadTable(){
 
 void CsvEdit::on_buttonBoxTable_accepted()
 {
-    vector<vector<std::string>> vecTable;
+    vector<vector<QString>> vecTable;
     int rows_count = ui->tableWidget->rowCount();
-    int column_count = ui->tableWidget->colorCount();
+    int column_count = ui->tableWidget->columnCount();
+    vector<QString> row;
+    for(int column_ = 0; column_ < column_count; column_++){
+        row.push_back(ui->tableWidget->horizontalHeaderItem(column_)->text());
+    }
+    vecTable.push_back(row);
     for(int row_ = 0; row_ < rows_count; row_++){
-        std::
-        vector<std::string> row;
+        vector<QString> row;
         for(int column_ = 0; column_ < column_count; column_++){
-            row.push_back(ui->tableWidget->item(row_, column_)->text().toStdString());
+            row.push_back(ui->tableWidget->item(row_, column_)->text());
         }
         vecTable.push_back(row);
         row.clear();
     }
-
+    WriteTable(vecTable);
 }
 
 
 
-void CsvEdit::WriteTable(vector<vector<std::string>> &data){
-    std::ofstream myfile;
-    std::cout << "начал сосать зуй" << "\n";
-    myfile.open("test.csv");
-    for (size_t i = 0; i < data.size(); ++i) {
-        for (size_t j = 0; j < data[i].size(); ++j){
-            std::cout << data[i][j] << ",";
+void CsvEdit::WriteTable(vector<vector<QString>> data){
+    QString filename = QString::fromStdString(_db.getWorkDir()+_filename);
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream stream( &file );
+        for (size_t i = 0; i < data.size(); ++i) {
+            for (size_t j = 0; j < data[i].size(); ++j){
+                stream << data[i][j] << ",";
+            }
+            stream << "\n";
         }
-        std::cout << "\n";
     }
+    //this->parent();
 }
 

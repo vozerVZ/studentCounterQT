@@ -32,6 +32,10 @@ void DatabaseHandler::setWorkDir(string _workDir){
     workDir = _workDir;
 }
 
+string DatabaseHandler::getWorkDir(){
+    return workDir;
+}
+
 int DatabaseHandler::getWorkdays(int month){
     // Получаем из базы данных число рабочих дней данном в месяце
     vector<vector<string>> sarr;

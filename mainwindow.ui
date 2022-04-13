@@ -250,37 +250,6 @@
      <string>18</string>
     </property>
    </widget>
-   <widget class="QSlider" name="horizontalSliderMonth">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>110</y>
-      <width>151</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>1</number>
-    </property>
-    <property name="maximum">
-     <number>12</number>
-    </property>
-    <property name="value">
-     <number>1</number>
-    </property>
-    <property name="tracking">
-     <bool>true</bool>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-    <property name="tickPosition">
-     <enum>QSlider::TicksAbove</enum>
-    </property>
-    <property name="tickInterval">
-     <number>1</number>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_month_2">
     <property name="geometry">
      <rect>
@@ -292,19 +261,6 @@
     </property>
     <property name="text">
      <string>Месяц</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_month">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>80</y>
-      <width>61</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>1</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_inst">
@@ -353,6 +309,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="QLineEdit" name="lineMonth">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>110</y>
+      <width>151</width>
+      <height>26</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -360,7 +326,7 @@
      <x>0</x>
      <y>0</y>
      <width>578</width>
-     <height>26</height>
+     <height>25</height>
     </rect>
    </property>
   </widget>
