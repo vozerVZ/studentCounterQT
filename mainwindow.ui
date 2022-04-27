@@ -45,37 +45,12 @@
      <rect>
       <x>40</x>
       <y>150</y>
-      <width>61</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>Вораст:</string>
-    </property>
-   </widget>
-   <widget class="QSlider" name="horizontalSliderAge">
-    <property name="geometry">
-     <rect>
-      <x>40</x>
-      <y>180</y>
-      <width>151</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>18</number>
-    </property>
-    <property name="maximum">
-     <number>30</number>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-    <property name="tickPosition">
-     <enum>QSlider::TicksAbove</enum>
-    </property>
-    <property name="tickInterval">
-     <number>1</number>
     </property>
    </widget>
    <widget class="QLabel" name="label_city">
@@ -174,6 +149,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushButtonCalculate">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>240</x>
@@ -235,19 +213,6 @@
     </property>
     <property name="wordWrap">
      <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_age">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>150</y>
-      <width>61</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>18</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_month_2">
@@ -317,6 +282,38 @@
       <width>151</width>
       <height>26</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButtonAge">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>180</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Включено</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="spinBoxAge">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>150</y>
+      <width>81</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>18</number>
+    </property>
+    <property name="maximum">
+     <number>30</number>
     </property>
    </widget>
   </widget>

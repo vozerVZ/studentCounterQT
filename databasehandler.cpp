@@ -36,24 +36,24 @@ string DatabaseHandler::getWorkDir(){
     return workDir;
 }
 
-int DatabaseHandler::getWorkdays(int month){
+int DatabaseHandler::getWorkdays(string month){
     // Получаем из базы данных число рабочих дней данном в месяце
     vector<vector<string>> sarr;
     readcsv("Workdays.csv", sarr);
     for (size_t i = 1; i < sarr.size(); i++){
-        if(stoi(sarr[i][0]) == month){
+        if(sarr[i][3] == month){
             return stoi(sarr[i][2]);
         }
     }
     return -1;
 }
 
-int DatabaseHandler::getDaysCount(int month) {
+int DatabaseHandler::getDaysCount(string month) {
     // Получаем из базы данных число дней данном в месяце
     vector<vector<string>> sarr;
     readcsv("Workdays.csv", sarr);
     for (size_t i = 1; i < sarr.size(); i++){
-        if(stoi(sarr[i][0]) == month){
+        if(sarr[i][3] == month){
             return stoi(sarr[i][1]);
         }
     }

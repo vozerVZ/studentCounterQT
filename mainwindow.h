@@ -20,15 +20,18 @@ public:
 private slots:
     void on_pushButtonCalculate_clicked();
 
-    void on_horizontalSliderAge_valueChanged(int value);
-
     void on_pushButtonWorkDir_clicked();
 
     void on_buttonEdit_clicked();
+
+    void on_radioButton_clicked();
+
+    void on_radioButtonAge_toggled(bool checked);
 
 private:
     DatabaseHandler _db;
     Ui::MainWindow* ui;
     void loadTips();
+    void checkReadyButton();
 };
 #endif // MAINWINDOW_H

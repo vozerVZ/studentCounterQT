@@ -17,7 +17,7 @@ class Student{
         string getName() const;
         void setAge(int _age);
         void setName(string _name);
-        int getCosts(int month, const std::string& city, const std::string& homeAddress,
+        int getCosts(string month, const std::string& city, const std::string& homeAddress,
             const std::string& institute, const std::string& cinema,
             const std::string& coffee, DatabaseHandler database);
 };

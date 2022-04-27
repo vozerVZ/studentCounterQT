@@ -26,7 +26,7 @@ void Student::setName(string _name){
     name = _name;
 }
 
-int Student::getCosts(int month, const std::string& city, const std::string& homeAddress,
+int Student::getCosts(string month, const std::string& city, const std::string& homeAddress,
     const std::string& institute, const std::string& cinema,
     const std::string& coffee, DatabaseHandler database) {
     /* Расходы:

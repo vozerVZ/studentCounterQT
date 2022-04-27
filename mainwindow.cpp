@@ -35,6 +35,7 @@ void MainWindow::loadTips(){
     ui->comboBoxCafe->clear();
     ui->comboBoxCinema->clear();
     ui->comboBoxInstitute->clear();
+    QStringList wordList;
     for(std::size_t i = 1; i < cities.size(); i++){
         if(ui->comboBoxCity->findText(QString::fromStdString(cities[i][0])) == -1){
             ui->comboBoxCity->addItem(QString::fromStdString(cities[i][0]));
@@ -56,18 +57,22 @@ void MainWindow::loadTips(){
             ui->comboBoxInstitute->addItem(QString::fromStdString(institute[i][1]));
         }
     }
-    QStringList wordList;
-    wordList << "alpha" << "omega" << "omicron" << "zeta";
+    vector<vector<std::string>> month;
+    _db.readcsv("Workdays.csv", month);
+    for(std::size_t i = 1; i < month.size(); i++){
+        wordList << QString::fromStdString(month[i][3]);
+    }
     QCompleter *test = new QCompleter(wordList);
 
     ui->lineMonth->setCompleter(test);
+    checkReadyButton();
 }
 
 void MainWindow::on_pushButtonCalculate_clicked(){
-    int age = ui->label_age->text().toInt();
+    int age = ui->spinBoxAge->value();
     std::string name = ui->lineName->text().toStdString();
     Student student(age, name);
-    int month = 2;
+    std::string month = ui->lineMonth->text().toStdString();
     std::string city = ui->comboBoxCity->currentText().toStdString();
     std::string homeAddress = ui->comboBoxDistrict->currentText().toStdString();
     std::string cinema = ui->comboBoxCinema->currentText().toStdString();
@@ -78,13 +83,14 @@ void MainWindow::on_pushButtonCalculate_clicked(){
     msgBox.setWindowTitle("Результат");
     msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
     msgBox.exec();
+
 }
 
-
-void MainWindow::on_horizontalSliderAge_valueChanged(int value){
-    ui->label_age->setText(QString::number(value));
+void MainWindow::checkReadyButton(){
+    if(!ui->lineName->text().isEmpty() && !ui->lineMonth->text().isEmpty()){
+        ui->pushButtonCalculate->setEnabled(true);
+    }
 }
-
 
 void MainWindow::on_pushButtonWorkDir_clicked(){
     QString workDir = QFileDialog::getExistingDirectory();
@@ -113,5 +119,35 @@ void MainWindow::on_buttonEdit_clicked()
     csvedit.setModal(true);
     csvedit.exec();
     loadTips();
+}
+
+
+void MainWindow::on_radioButton_clicked()
+{
+
+}
+
+
+void MainWindow::on_radioButtonAge_toggled(bool checked)
+{
+    if(checked){
+        ui->spinBoxAge->setEnabled(true);
+    }
+    else{
+        ui->spinBoxAge->setEnabled(false);
+    }
+    checkReadyButton();
+}
+
+
+void MainWindow::on_lineMonth_textChanged(const QString &arg1)
+{
+    checkReadyButton();
+}
+
+
+void MainWindow::on_lineName_textEdited(const QString &arg1)
+{
+    checkReadyButton();
 }
 
