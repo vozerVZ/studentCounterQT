@@ -123,6 +123,9 @@ int DatabaseHandler::getOtherMontlyCosts(const std::string& city, int age){
     /* Получаем из базы данных средние по региону затраты в данном месяце
      для людей данного возраста
     (по остальным статьям кроме еды, транспорта и развлечений) */
+    if(age == 0){
+        return 0;
+    }
     vector<vector<string>> sarr;
     readcsv("Costs.csv", sarr);
     for (size_t i = 1; i < sarr.size(); i++){

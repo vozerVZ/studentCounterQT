@@ -69,7 +69,11 @@ void MainWindow::loadTips(){
 }
 
 void MainWindow::on_pushButtonCalculate_clicked(){
-    int age = ui->spinBoxAge->value();
+    int age = 0;
+    if(ui->radioButtonAge->isChecked()){
+        age = ui->spinBoxAge->value();
+    }
+
     std::string name = ui->lineName->text().toStdString();
     Student student(age, name);
     std::string month = ui->lineMonth->text().toStdString();
