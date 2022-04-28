@@ -20,7 +20,7 @@ MainWindow::MainWindow(DatabaseHandler& db, QWidget* parent)
     , ui(new Ui::MainWindow){
     _db = db;
     ui->setupUi(this);
-
+    this->setWindowTitle("Твоя цена");
 }
 
 MainWindow::~MainWindow(){
@@ -81,12 +81,18 @@ void MainWindow::on_pushButtonCalculate_clicked(){
     int costs = student.getCosts(month, city, homeAddress, institute, cinema, coffee, _db);
     QMessageBox msgBox;
     msgBox.setWindowTitle("Результат");
-    msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
+    if(costs > 0){
+        msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
+    }
+    else{
+        msgBox.setText("Ошибка: данные введены неверно");
+        msgBox.setStyleSheet("color: red;");
+    }
     msgBox.exec();
 }
 
 void MainWindow::checkReadyButton(){
-    if(!ui->lineName->text().isEmpty() && !ui->lineMonth->text().isEmpty()){
+    if(!ui->lineName->text().isEmpty() && !ui->lineMonth->text().isEmpty() && _db.getWorkDir()!=""){
         ui->pushButtonCalculate->setEnabled(true);
     }
 }
@@ -102,6 +108,7 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
     }
     _db.setWorkDir(path);
     loadTips();
+    ui->buttonEdit->setEnabled(true);
     ui->label_dir->setText(workDir);
     ui->label_dir->adjustSize();
 }

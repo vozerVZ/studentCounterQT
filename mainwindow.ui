@@ -252,6 +252,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="buttonEdit">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>422</x>
@@ -323,7 +326,7 @@
      <x>0</x>
      <y>0</y>
      <width>578</width>
-     <height>25</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
