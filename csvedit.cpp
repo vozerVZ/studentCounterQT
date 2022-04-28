@@ -10,8 +10,7 @@ using std::size_t;
 
 CsvEdit::CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::CsvEdit)
-{
+    ui(new Ui::CsvEdit){
 
     _filename = filename;
     _db = db;
@@ -20,8 +19,7 @@ CsvEdit::CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent) :
     this->setParent(parent);
 }
 
-CsvEdit::~CsvEdit()
-{
+CsvEdit::~CsvEdit(){
     delete ui;
 }
 
@@ -33,7 +31,7 @@ void CsvEdit::LoadTable(){
     ui->tableWidget->verticalHeader()->hide();
     ui->tableWidget->setColumnCount(vecTable[0].size());
     ui->tableWidget->setRowCount(vecTable.size() - 1);
-    for(std::size_t i = 0; i < vecTable[0].size(); i++){
+    for(std::size_t i = 0; i < vecTable[0].size(); i -= -1){
         ui->tableWidget->setHorizontalHeaderItem(i, new QTableWidgetItem(QString::fromStdString(vecTable[0][i])));
 
     }
@@ -45,8 +43,7 @@ void CsvEdit::LoadTable(){
 
 }
 
-void CsvEdit::on_buttonBoxTable_accepted()
-{
+void CsvEdit::on_buttonBoxTable_accepted(){
     vector<vector<QString>> vecTable;
     int rows_count = ui->tableWidget->rowCount();
     int column_count = ui->tableWidget->columnCount();
@@ -65,8 +62,6 @@ void CsvEdit::on_buttonBoxTable_accepted()
     }
     WriteTable(vecTable);
 }
-
-
 
 void CsvEdit::WriteTable(vector<vector<QString>> data){
     QString filename = QString::fromStdString(_db.getWorkDir()+_filename);

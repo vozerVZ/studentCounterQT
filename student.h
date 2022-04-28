@@ -7,6 +7,7 @@
 #include <fstream>
 using namespace std;
 
+
 class Student{
     private:
         int age;

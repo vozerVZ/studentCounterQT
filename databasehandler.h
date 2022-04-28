@@ -8,8 +8,7 @@
 using namespace std;
 
 
-class DatabaseHandler
-{
+class DatabaseHandler{
     public:
         void setWorkDir(string _workDir);
         string getWorkDir();

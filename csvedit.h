@@ -5,12 +5,12 @@
 #include "databasehandler.h"
 #include <QTableWidget>
 
+
 namespace Ui {
 class CsvEdit;
 }
 
-class CsvEdit : public QDialog
-{
+class CsvEdit : public QDialog{
     Q_OBJECT
 public:
     explicit CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent = nullptr);

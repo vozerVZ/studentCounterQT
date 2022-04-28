@@ -9,8 +9,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
-{
+
+class MainWindow : public QMainWindow{
     Q_OBJECT
 
 public:
@@ -27,6 +27,10 @@ private slots:
     void on_radioButton_clicked();
 
     void on_radioButtonAge_toggled(bool checked);
+
+    void on_lineName_textEdited(const QString &arg1);
+
+    void on_lineMonth_textEdited(const QString &arg1);
 
 private:
     DatabaseHandler _db;

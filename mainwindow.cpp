@@ -83,7 +83,6 @@ void MainWindow::on_pushButtonCalculate_clicked(){
     msgBox.setWindowTitle("Результат");
     msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
     msgBox.exec();
-
 }
 
 void MainWindow::checkReadyButton(){
@@ -107,13 +106,7 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
     ui->label_dir->adjustSize();
 }
 
-
-
-
-
-
-void MainWindow::on_buttonEdit_clicked()
-{
+void MainWindow::on_buttonEdit_clicked(){
     std::string efilename = ui->comboBoxFile->currentText().toStdString();
     CsvEdit csvedit(efilename, _db, this);
     csvedit.setModal(true);
@@ -121,15 +114,10 @@ void MainWindow::on_buttonEdit_clicked()
     loadTips();
 }
 
-
-void MainWindow::on_radioButton_clicked()
-{
-
+void MainWindow::on_radioButton_clicked(){
 }
 
-
-void MainWindow::on_radioButtonAge_toggled(bool checked)
-{
+void MainWindow::on_radioButtonAge_toggled(bool checked){
     if(checked){
         ui->spinBoxAge->setEnabled(true);
     }
@@ -139,15 +127,9 @@ void MainWindow::on_radioButtonAge_toggled(bool checked)
     checkReadyButton();
 }
 
-
-void MainWindow::on_lineMonth_textChanged(const QString &arg1)
-{
-    checkReadyButton();
+void MainWindow::on_lineName_textEdited(const QString &arg1){
 }
 
-
-void MainWindow::on_lineName_textEdited(const QString &arg1)
-{
+void MainWindow::on_lineMonth_textEdited(const QString &arg1){
     checkReadyButton();
 }
-

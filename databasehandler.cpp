@@ -8,8 +8,7 @@
 
 void DatabaseHandler::readcsv(const string& filename, vector<vector<string>>& arr){
     ifstream fs(workDir+filename);
-    if (!fs.is_open())
-    {
+    if (!fs.is_open()){
         cout << "File not opened: "<< filename << endl;
         return;
     }
@@ -19,8 +18,7 @@ void DatabaseHandler::readcsv(const string& filename, vector<vector<string>>& ar
     while (getline(fs, BigStr)){
         string ThsStr;
         stringstream lineStream(BigStr);
-        while (getline(lineStream, ThsStr, ','))
-        {
+        while (getline(lineStream, ThsStr, ',')){
             selements.push_back(ThsStr);
         }
         arr.push_back(selements);
