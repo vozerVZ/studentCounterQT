@@ -9,8 +9,7 @@
 void DatabaseHandler::readcsv(const string& filename, vector<vector<string>>& arr){
     ifstream fs(workDir+filename);
     if (!fs.is_open()){
-        cout << "File not opened: "<< filename << endl;
-        return;
+        throw "File not opened";
     }
     string BigStr;
     vector<string> selements;

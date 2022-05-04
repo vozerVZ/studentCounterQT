@@ -63,7 +63,7 @@ void MainWindow::loadTips(){
         wordList << QString::fromStdString(month[i][3]);
     }
     QCompleter *test = new QCompleter(wordList);
-
+    test->setCaseSensitivity(Qt::CaseSensitivity());
     ui->lineMonth->setCompleter(test);
     checkReadyButton();
 }
@@ -82,21 +82,29 @@ void MainWindow::on_pushButtonCalculate_clicked(){
     std::string cinema = ui->comboBoxCinema->currentText().toStdString();
     std::string institute = ui->comboBoxInstitute->currentText().toStdString();
     std::string coffee = ui->comboBoxCafe->currentText().toStdString();
-    int costs = student.getCosts(month, city, homeAddress, institute, cinema, coffee, _db);
+    int costs;
     QMessageBox msgBox;
-    msgBox.setWindowTitle("Результат");
-    if(costs > 0){
-        msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
-    }
-    else{
-        msgBox.setText("Ошибка: данные введены неверно");
+    try {
+        costs = student.getCosts(month, city, homeAddress, institute, cinema, coffee, _db);
+        if(costs > 0){
+            msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
+        }
+        else{
+            msgBox.setText("Ошибка: данные введены неверно");
+            msgBox.setStyleSheet("color: red;");
+        }
+    }  catch (const std::exception& e) {
+        msgBox.setText("Ошибка в функции: " + QString(e.what()));
         msgBox.setStyleSheet("color: red;");
     }
+
+    msgBox.setWindowTitle("Результат");
+
     msgBox.exec();
 }
 
 void MainWindow::checkReadyButton(){
-    if(!ui->lineName->text().isEmpty() && !ui->lineMonth->text().isEmpty() && _db.getWorkDir()!=""){
+    if(!ui->lineName->text().isEmpty() && !ui->lineMonth->text().isEmpty() && _db.getWorkDir().size() != 0){
         ui->pushButtonCalculate->setEnabled(true);
     }
 }
@@ -110,11 +118,21 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
             ui->comboBoxFile->addItem(QString::fromStdString(efilename));
         }
     }
-    _db.setWorkDir(path);
-    loadTips();
-    ui->buttonEdit->setEnabled(true);
-    ui->label_dir->setText(workDir);
-    ui->label_dir->adjustSize();
+    try{
+        _db.setWorkDir(path);
+        loadTips();
+        ui->buttonEdit->setEnabled(true);
+        ui->label_dir->setText(workDir);
+        ui->label_dir->adjustSize();
+    }
+    catch(const char* e){
+        _db.setWorkDir("");
+        QMessageBox msgBox;
+        msgBox.setText(QString(e));
+        msgBox.setStyleSheet("color: red;");
+        msgBox.setWindowTitle("Ошибка");
+        msgBox.exec();
+    }
 }
 
 void MainWindow::on_buttonEdit_clicked(){

@@ -20,7 +20,6 @@ class DatabaseHandler{
         int getWeekandCost(const string& city, const string& cinema, const string& coffee);
     private:
         string workDir;
-
         int getHomeFoodCost(const string& city);
         int getCinemaCost(const string& city, const string& cinema);
         int getCoffeeCost(const string& city, const string& coffee);
