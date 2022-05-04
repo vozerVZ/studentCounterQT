@@ -1,4 +1,5 @@
 #include "csvedit.h"
+#include "csvread.h"
 #include "ui_csvedit.h"
 #include <vector>
 #include <QDebug>
@@ -15,7 +16,7 @@ CsvEdit::CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent) :
     _filename = filename;
     _db = db;
     ui->setupUi(this);
-    LoadTable();
+    LoadTable(_db.getWorkDir());
     this->setParent(parent);
 }
 
@@ -23,10 +24,11 @@ CsvEdit::~CsvEdit(){
     delete ui;
 }
 
-void CsvEdit::LoadTable(){
+void CsvEdit::LoadTable(string workDir){
     ui->labelTable->setText(QString::fromStdString(_filename));
+    CsvRead reader;
     vector<vector<std::string>> vecTable;
-    _db.readcsv(_filename, vecTable);
+    reader.readcsv(workDir, _filename, vecTable);
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableWidget->verticalHeader()->hide();
     ui->tableWidget->setColumnCount(vecTable[0].size());
@@ -75,6 +77,6 @@ void CsvEdit::WriteTable(vector<vector<QString>> data){
             stream << "\n";
         }
     }
+    _db.reloadTables();
     //this->parent();
 }
-

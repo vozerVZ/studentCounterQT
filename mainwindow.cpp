@@ -28,39 +28,35 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::loadTips(){
-    vector<vector<std::string>> cities;
-    _db.readcsv("Caffe-and-cinema.csv", cities);
     ui->comboBoxCity->clear();
     ui->comboBoxDistrict->clear();
     ui->comboBoxCafe->clear();
     ui->comboBoxCinema->clear();
     ui->comboBoxInstitute->clear();
     QStringList wordList;
-    for(std::size_t i = 1; i < cities.size(); i++){
-        if(ui->comboBoxCity->findText(QString::fromStdString(cities[i][0])) == -1){
-            ui->comboBoxCity->addItem(QString::fromStdString(cities[i][0]));
+    for(std::size_t i = 1; i < _db.caffeAndCinemaTable.size(); i++){
+        if(ui->comboBoxCity->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][0])) == -1){
+            ui->comboBoxCity->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][0]));
         }
-        if(ui->comboBoxDistrict->findText(QString::fromStdString(cities[i][1])) == -1){
-            ui->comboBoxDistrict->addItem(QString::fromStdString(cities[i][1]));
+        if(ui->comboBoxDistrict->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][1])) == -1){
+            ui->comboBoxDistrict->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][1]));
         }
-        if(ui->comboBoxCafe->findText(QString::fromStdString(cities[i][2])) == -1){
-            ui->comboBoxCafe->addItem(QString::fromStdString(cities[i][2]));
+        if(ui->comboBoxCafe->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][2])) == -1){
+            ui->comboBoxCafe->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][2]));
         }
-        if(ui->comboBoxCinema->findText(QString::fromStdString(cities[i][4])) == -1){
-            ui->comboBoxCinema->addItem(QString::fromStdString(cities[i][4]));
-        }
-    }
-    vector<vector<std::string>> institute;
-    _db.readcsv("Institute.csv", institute);
-    for(std::size_t i = 1; i < institute.size(); i++){
-        if(ui->comboBoxInstitute->findText(QString::fromStdString(institute[i][1])) == -1){
-            ui->comboBoxInstitute->addItem(QString::fromStdString(institute[i][1]));
+        if(ui->comboBoxCinema->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][4])) == -1){
+            ui->comboBoxCinema->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][4]));
         }
     }
-    vector<vector<std::string>> month;
-    _db.readcsv("Workdays.csv", month);
-    for(std::size_t i = 1; i < month.size(); i++){
-        wordList << QString::fromStdString(month[i][3]);
+
+    for(std::size_t i = 1; i < _db.instituteTable.size(); i++){
+        if(ui->comboBoxInstitute->findText(QString::fromStdString(_db.instituteTable[i][1])) == -1){
+            ui->comboBoxInstitute->addItem(QString::fromStdString(_db.instituteTable[i][1]));
+        }
+    }
+
+    for(std::size_t i = 1; i < _db.workdaysTable.size(); i++){
+        wordList << QString::fromStdString(_db.workdaysTable[i][3]);
     }
     QCompleter *test = new QCompleter(wordList);
     test->setCaseSensitivity(Qt::CaseSensitivity());
@@ -114,12 +110,13 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
     std::string path = workDir.toStdString().append("/");
     for (const auto & file : directory_iterator(path)){
         std::string efilename = file.path().filename().string();
-        if(efilename.find(".csv")!= std::string::npos){
+        if(efilename.find(".csv") != std::string::npos){
             ui->comboBoxFile->addItem(QString::fromStdString(efilename));
         }
     }
     try{
         _db.setWorkDir(path);
+        _db.reloadTables();
         loadTips();
         ui->buttonEdit->setEnabled(true);
         ui->label_dir->setText(workDir);
@@ -140,6 +137,7 @@ void MainWindow::on_buttonEdit_clicked(){
     CsvEdit csvedit(efilename, _db, this);
     csvedit.setModal(true);
     csvedit.exec();
+    _db.reloadTables();
     loadTips();
 }
 

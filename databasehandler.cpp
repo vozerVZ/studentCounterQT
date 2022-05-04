@@ -1,32 +1,28 @@
 #include "databasehandler.h"
+#include "csvread.h"
 #include <string>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <sstream>
 
-
-void DatabaseHandler::readcsv(const string& filename, vector<vector<string>>& arr){
-    ifstream fs(workDir+filename);
-    if (!fs.is_open()){
-        throw "File not opened";
-    }
-    string BigStr;
-    vector<string> selements;
-
-    while (getline(fs, BigStr)){
-        string ThsStr;
-        stringstream lineStream(BigStr);
-        while (getline(lineStream, ThsStr, ',')){
-            selements.push_back(ThsStr);
-        }
-        arr.push_back(selements);
-        selements.clear();
-    }
-}
-
 void DatabaseHandler::setWorkDir(string _workDir){
     workDir = _workDir;
+}
+
+void DatabaseHandler::reloadTables(){
+    caffeAndCinemaTable.clear();
+    costsTable.clear();
+    instituteTable.clear();
+    transportTable.clear();
+    workdaysTable.clear();
+
+    CsvRead reader;
+    reader.readcsv(workDir, "Caffe-and-cinema.csv", caffeAndCinemaTable);
+    reader.readcsv(workDir, "Costs.csv", costsTable);
+    reader.readcsv(workDir, "Institute.csv", instituteTable);
+    reader.readcsv(workDir, "Transport.csv", transportTable);
+    reader.readcsv(workDir, "Workdays.csv", workdaysTable);
 }
 
 string DatabaseHandler::getWorkDir(){
@@ -35,11 +31,9 @@ string DatabaseHandler::getWorkDir(){
 
 int DatabaseHandler::getWorkdays(string month){
     // Получаем из базы данных число рабочих дней данном в месяце
-    vector<vector<string>> sarr;
-    readcsv("Workdays.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if(sarr[i][3] == month){
-            return stoi(sarr[i][2]);
+    for (size_t i = 1; i < workdaysTable.size(); i++){
+        if(workdaysTable[i][3] == month){
+            return stoi(workdaysTable[i][2]);
         }
     }
     return -1;
@@ -47,11 +41,9 @@ int DatabaseHandler::getWorkdays(string month){
 
 int DatabaseHandler::getDaysCount(string month) {
     // Получаем из базы данных число дней данном в месяце
-    vector<vector<string>> sarr;
-    readcsv("Workdays.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if(sarr[i][3] == month){
-            return stoi(sarr[i][1]);
+    for (size_t i = 1; i < workdaysTable.size(); i++){
+        if(workdaysTable[i][3] == month){
+            return stoi(workdaysTable[i][1]);
         }
     }
     return -1;
@@ -59,11 +51,9 @@ int DatabaseHandler::getDaysCount(string month) {
 
 int DatabaseHandler::getTransportCost(const string& city, const string& homeAddress,const string& institute){
     // Получаем из базы данных стоимость кратчайшей дороги до инстиутта
-    vector<vector<string>> sarr;
-    readcsv("Transport.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if (sarr[i][0] == city && sarr[i][1] == homeAddress && sarr[i][2] == institute){
-            return stoi(sarr[i][3]);
+    for (size_t i = 1; i < transportTable.size(); i++){
+        if (transportTable[i][0] == city && transportTable[i][1] == homeAddress && transportTable[i][2] == institute){
+            return stoi(transportTable[i][3]);
         }
     }
     return -1;
@@ -71,11 +61,9 @@ int DatabaseHandler::getTransportCost(const string& city, const string& homeAddr
 
 int DatabaseHandler::getInstituteDinnerCost(const string& city, const string& institute){
     // Получаем из базы данных среднюю стоимость обеда в столовой данного института
-    vector<vector<string>> sarr;
-    readcsv("Institute.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if (sarr[i][0] == city && sarr[i][1] == institute){
-            return stoi(sarr[i][2]);
+    for (size_t i = 1; i < instituteTable.size(); i++){
+        if (instituteTable[i][0] == city && instituteTable[i][1] == institute){
+            return stoi(instituteTable[i][2]);
         }
     }
     return -1;
@@ -83,11 +71,9 @@ int DatabaseHandler::getInstituteDinnerCost(const string& city, const string& in
 
 int DatabaseHandler::getCoffeeCost(const string& city, const string& coffee){
     // Получаем из базы данных средний чек в данном баре
-    vector<vector<string>> sarr;
-    readcsv("Caffe-and-cinema.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if (sarr[i][0] == city && sarr[i][2] == coffee){
-            return stoi(sarr[i][3]);
+    for (size_t i = 1; i < caffeAndCinemaTable.size(); i++){
+        if (caffeAndCinemaTable[i][0] == city && caffeAndCinemaTable[i][2] == coffee){
+            return stoi(caffeAndCinemaTable[i][3]);
         }
     }
     return -1;
@@ -95,11 +81,9 @@ int DatabaseHandler::getCoffeeCost(const string& city, const string& coffee){
 
 int DatabaseHandler::getCinemaCost(const string& city, const string& cinema){
     // Получаем из базы данных стоимость билета на вечерний сеанс в данном кинотетре
-    vector<vector<string>> sarr;
-    readcsv("Caffe-and-cinema.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if (sarr[i][0] == city && sarr[i][4] == cinema){
-            return stoi(sarr[i][5]);
+    for (size_t i = 1; i < caffeAndCinemaTable.size(); i++){
+        if (caffeAndCinemaTable[i][0] == city && caffeAndCinemaTable[i][4] == cinema){
+            return stoi(caffeAndCinemaTable[i][5]);
         }
     }
     return -1;
@@ -107,11 +91,9 @@ int DatabaseHandler::getCinemaCost(const string& city, const string& cinema){
 
 int DatabaseHandler::getHomeFoodCost(const string& city){
     // Получаем из базы данных средние по региону затраты на еду
-    vector<vector<string>> sarr;
-    readcsv("Costs.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if (sarr[i][0] == city){
-            return stoi(sarr[i][2]);
+    for (size_t i = 1; i < costsTable.size(); i++){
+        if (costsTable[i][0] == city){
+            return stoi(costsTable[i][2]);
         }
     }
     return -1;
@@ -125,35 +107,10 @@ int DatabaseHandler::getOtherMontlyCosts(const std::string& city, int age){
     if(age == 0){
         return 0;
     }
-    vector<vector<string>> sarr;
-    readcsv("Costs.csv", sarr);
-    for (size_t i = 1; i < sarr.size(); i++){
-        if (sarr[i][0] == city && stoi(sarr[i][1]) == age){
-            return stoi(sarr[i][3]);
+    for (size_t i = 1; i < costsTable.size(); i++){
+        if (costsTable[i][0] == city && stoi(costsTable[i][1]) == age){
+            return stoi(costsTable[i][3]);
         }
     }
     return -1;
-}
-
-int DatabaseHandler::getWorkdayCost(const std::string& city, const std::string& homeAddress,
-                    const std::string& institute) {
-   /* По рабочим дням расходы складываются из стоимости:
-    - дороги до института и обратно
-    - обеда в институтской столовой
-    - завтрака и обеда дома */
-
-    return static_cast<int>(2 * getTransportCost(city, homeAddress, institute) +
-        getInstituteDinnerCost(city, institute) + 0.66 * getHomeFoodCost(city) + 0.5);
-}
-
-
-int DatabaseHandler::getWeekandCost(const std::string& city, const std::string& cinema,
-                    const std::string& coffee) {
-    /* По выходным дням расходы складываются из стоимости:
-     - похода в кино (пешком)
-     - похода  в кафе (пешком)
-     - завтрака и обеда дома */
-
-    return static_cast<int>(0.66 * getHomeFoodCost(city) +
-        getCinemaCost(city, cinema) + getCoffeeCost(city, coffee) + 0.5);
 }

@@ -21,6 +21,10 @@ class Student{
         int getCosts(string month, const std::string& city, const std::string& homeAddress,
             const std::string& institute, const std::string& cinema,
             const std::string& coffee, DatabaseHandler database);
+        int getWorkdayCost(const string& city, const string& homeAddress, const string& institute,
+                           DatabaseHandler database);
+        int getWeekendCost(const string& city, const string& cinema, const string& coffee,
+                           DatabaseHandler database);
 };
 
 #endif

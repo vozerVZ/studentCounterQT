@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     csvedit.cpp \
+    csvread.cpp \
     databasehandler.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     csvedit.h \
+    csvread.h \
     databasehandler.h \
     mainwindow.h \
     student.h

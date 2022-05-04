@@ -16,14 +16,13 @@ public:
     explicit CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent = nullptr);
     ~CsvEdit();
 private slots:
-
     void on_buttonBoxTable_accepted();
 
 private:
     Ui::CsvEdit *ui;
     std::string _filename;
     DatabaseHandler _db;
-    void LoadTable();
+    void LoadTable(string workDir);
     void WriteTable(vector<vector<QString>> data);
 };
 

@@ -26,6 +26,29 @@ void Student::setName(string _name){
     name = _name;
 }
 
+int Student::getWorkdayCost(const std::string& city, const std::string& homeAddress,
+                    const std::string& institute, DatabaseHandler database) {
+   /* По рабочим дням расходы складываются из стоимости:
+    - дороги до института и обратно
+    - обеда в институтской столовой
+    - завтрака и обеда дома */
+
+    return static_cast<int>(2 * database.getTransportCost(city, homeAddress, institute) +
+        database.getInstituteDinnerCost(city, institute) + 0.66 * database.getHomeFoodCost(city) + 0.5);
+}
+
+
+int Student::getWeekendCost(const std::string& city, const std::string& cinema,
+                    const std::string& coffee, DatabaseHandler database) {
+    /* По выходным дням расходы складываются из стоимости:
+     - похода в кино (пешком)
+     - похода  в кафе (пешком)
+     - завтрака и обеда дома */
+
+    return static_cast<int>(0.66 * database.getHomeFoodCost(city) +
+        database.getCinemaCost(city, cinema) + database.getCoffeeCost(city, coffee) + 0.5);
+}
+
 int Student::getCosts(string month, const std::string& city, const std::string& homeAddress,
     const std::string& institute, const std::string& cinema,
     const std::string& coffee, DatabaseHandler database) {
@@ -38,7 +61,7 @@ int Student::getCosts(string month, const std::string& city, const std::string& 
     const int workDays = database.getWorkdays(month);
     const int weekends = daysCount - workDays;
 
-    return workDays * database.getWorkdayCost(city, homeAddress, institute) +
-           weekends * database.getWeekandCost(city, cinema, coffee) +
+    return workDays * getWorkdayCost(city, homeAddress, institute, database) +
+           weekends * getWeekendCost(city, cinema, coffee, database) +
            database.getOtherMontlyCosts(city, getAge());
 }
