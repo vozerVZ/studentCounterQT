@@ -34,7 +34,7 @@ private slots:
 
 private:
     DatabaseHandler _db;
-    Ui::MainWindow* ui;
+    Ui::MainWindow* _ui;
     void loadTips();
     void checkReadyButton();
 };

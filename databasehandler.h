@@ -10,7 +10,7 @@ using namespace std;
 
 class DatabaseHandler{
     public:
-        void setWorkDir(string _workDir);
+        void setWorkDir(string workDir);
         void reloadTables();
         string getWorkDir();
         int getWorkdays(string month);
@@ -27,7 +27,7 @@ class DatabaseHandler{
         vector<vector<string>> transportTable;
         vector<vector<string>> workdaysTable;
     private:
-        string workDir;
+        string _workDir;
 
 };
 

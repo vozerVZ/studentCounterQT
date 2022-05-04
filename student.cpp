@@ -5,25 +5,25 @@
 using namespace std;
 
 
-Student::Student(int _age, string _name){
-    age = _age;
-    name = _name;
+Student::Student(int age, string name){
+    _age = age;
+    _name = name;
 }
 
 int Student::getAge() const{
-    return age;
+    return _age;
 }
 
 string Student::getName() const{
-    return name;
+    return _name;
 }
 
-void Student::setAge(int _age){
-    age = _age;
+void Student::setAge(int age){
+    _age = age;
 }
 
-void Student::setName(string _name){
-    name = _name;
+void Student::setName(string name){
+    _name = name;
 }
 
 int Student::getWorkdayCost(const std::string& city, const std::string& homeAddress,

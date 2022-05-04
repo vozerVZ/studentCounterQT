@@ -17,41 +17,41 @@ using std::filesystem::directory_iterator;
 
 MainWindow::MainWindow(DatabaseHandler& db, QWidget* parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow){
+    , _ui(new Ui::MainWindow){
     _db = db;
-    ui->setupUi(this);
+    _ui->setupUi(this);
     this->setWindowTitle("Твоя цена");
 }
 
 MainWindow::~MainWindow(){
-    delete ui;
+    delete _ui;
 }
 
 void MainWindow::loadTips(){
-    ui->comboBoxCity->clear();
-    ui->comboBoxDistrict->clear();
-    ui->comboBoxCafe->clear();
-    ui->comboBoxCinema->clear();
-    ui->comboBoxInstitute->clear();
+    _ui->comboBoxCity->clear();
+    _ui->comboBoxDistrict->clear();
+    _ui->comboBoxCafe->clear();
+    _ui->comboBoxCinema->clear();
+    _ui->comboBoxInstitute->clear();
     QStringList wordList;
     for(std::size_t i = 1; i < _db.caffeAndCinemaTable.size(); i++){
-        if(ui->comboBoxCity->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][0])) == -1){
-            ui->comboBoxCity->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][0]));
+        if(_ui->comboBoxCity->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][0])) == -1){
+            _ui->comboBoxCity->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][0]));
         }
-        if(ui->comboBoxDistrict->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][1])) == -1){
-            ui->comboBoxDistrict->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][1]));
+        if(_ui->comboBoxDistrict->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][1])) == -1){
+            _ui->comboBoxDistrict->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][1]));
         }
-        if(ui->comboBoxCafe->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][2])) == -1){
-            ui->comboBoxCafe->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][2]));
+        if(_ui->comboBoxCafe->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][2])) == -1){
+            _ui->comboBoxCafe->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][2]));
         }
-        if(ui->comboBoxCinema->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][4])) == -1){
-            ui->comboBoxCinema->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][4]));
+        if(_ui->comboBoxCinema->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][4])) == -1){
+            _ui->comboBoxCinema->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][4]));
         }
     }
 
     for(std::size_t i = 1; i < _db.instituteTable.size(); i++){
-        if(ui->comboBoxInstitute->findText(QString::fromStdString(_db.instituteTable[i][1])) == -1){
-            ui->comboBoxInstitute->addItem(QString::fromStdString(_db.instituteTable[i][1]));
+        if(_ui->comboBoxInstitute->findText(QString::fromStdString(_db.instituteTable[i][1])) == -1){
+            _ui->comboBoxInstitute->addItem(QString::fromStdString(_db.instituteTable[i][1]));
         }
     }
 
@@ -60,24 +60,24 @@ void MainWindow::loadTips(){
     }
     QCompleter *test = new QCompleter(wordList);
     test->setCaseSensitivity(Qt::CaseSensitivity());
-    ui->lineMonth->setCompleter(test);
+    _ui->lineMonth->setCompleter(test);
     checkReadyButton();
 }
 
 void MainWindow::on_pushButtonCalculate_clicked(){
     int age = 0;
-    if(ui->radioButtonAge->isChecked()){
-        age = ui->spinBoxAge->value();
+    if(_ui->radioButtonAge->isChecked()){
+        age = _ui->spinBoxAge->value();
     }
 
-    std::string name = ui->lineName->text().toStdString();
+    std::string name = _ui->lineName->text().toStdString();
     Student student(age, name);
-    std::string month = ui->lineMonth->text().toStdString();
-    std::string city = ui->comboBoxCity->currentText().toStdString();
-    std::string homeAddress = ui->comboBoxDistrict->currentText().toStdString();
-    std::string cinema = ui->comboBoxCinema->currentText().toStdString();
-    std::string institute = ui->comboBoxInstitute->currentText().toStdString();
-    std::string coffee = ui->comboBoxCafe->currentText().toStdString();
+    std::string month = _ui->lineMonth->text().toStdString();
+    std::string city = _ui->comboBoxCity->currentText().toStdString();
+    std::string homeAddress = _ui->comboBoxDistrict->currentText().toStdString();
+    std::string cinema = _ui->comboBoxCinema->currentText().toStdString();
+    std::string institute = _ui->comboBoxInstitute->currentText().toStdString();
+    std::string coffee = _ui->comboBoxCafe->currentText().toStdString();
     int costs;
     QMessageBox msgBox;
     try {
@@ -100,8 +100,8 @@ void MainWindow::on_pushButtonCalculate_clicked(){
 }
 
 void MainWindow::checkReadyButton(){
-    if(!ui->lineName->text().isEmpty() && !ui->lineMonth->text().isEmpty() && _db.getWorkDir().size() != 0){
-        ui->pushButtonCalculate->setEnabled(true);
+    if(!_ui->lineName->text().isEmpty() && !_ui->lineMonth->text().isEmpty() && _db.getWorkDir().size() != 0){
+        _ui->pushButtonCalculate->setEnabled(true);
     }
 }
 
@@ -111,16 +111,16 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
     for (const auto & file : directory_iterator(path)){
         std::string efilename = file.path().filename().string();
         if(efilename.find(".csv") != std::string::npos){
-            ui->comboBoxFile->addItem(QString::fromStdString(efilename));
+            _ui->comboBoxFile->addItem(QString::fromStdString(efilename));
         }
     }
     try{
         _db.setWorkDir(path);
         _db.reloadTables();
         loadTips();
-        ui->buttonEdit->setEnabled(true);
-        ui->label_dir->setText(workDir);
-        ui->label_dir->adjustSize();
+        _ui->buttonEdit->setEnabled(true);
+        _ui->label_dir->setText(workDir);
+        _ui->label_dir->adjustSize();
     }
     catch(const char* e){
         _db.setWorkDir("");
@@ -133,7 +133,7 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
 }
 
 void MainWindow::on_buttonEdit_clicked(){
-    std::string efilename = ui->comboBoxFile->currentText().toStdString();
+    std::string efilename = _ui->comboBoxFile->currentText().toStdString();
     CsvEdit csvedit(efilename, _db, this);
     csvedit.setModal(true);
     csvedit.exec();
@@ -146,10 +146,10 @@ void MainWindow::on_radioButton_clicked(){
 
 void MainWindow::on_radioButtonAge_toggled(bool checked){
     if(checked){
-        ui->spinBoxAge->setEnabled(true);
+        _ui->spinBoxAge->setEnabled(true);
     }
     else{
-        ui->spinBoxAge->setEnabled(false);
+        _ui->spinBoxAge->setEnabled(false);
     }
     checkReadyButton();
 }

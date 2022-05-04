@@ -6,8 +6,8 @@
 #include <vector>
 #include <sstream>
 
-void DatabaseHandler::setWorkDir(string _workDir){
-    workDir = _workDir;
+void DatabaseHandler::setWorkDir(string workDir){
+    _workDir = workDir;
 }
 
 void DatabaseHandler::reloadTables(){
@@ -18,15 +18,15 @@ void DatabaseHandler::reloadTables(){
     workdaysTable.clear();
 
     CsvRead reader;
-    reader.readcsv(workDir, "Caffe-and-cinema.csv", caffeAndCinemaTable);
-    reader.readcsv(workDir, "Costs.csv", costsTable);
-    reader.readcsv(workDir, "Institute.csv", instituteTable);
-    reader.readcsv(workDir, "Transport.csv", transportTable);
-    reader.readcsv(workDir, "Workdays.csv", workdaysTable);
+    reader.readcsv(_workDir, "Caffe-and-cinema.csv", caffeAndCinemaTable);
+    reader.readcsv(_workDir, "Costs.csv", costsTable);
+    reader.readcsv(_workDir, "Institute.csv", instituteTable);
+    reader.readcsv(_workDir, "Transport.csv", transportTable);
+    reader.readcsv(_workDir, "Workdays.csv", workdaysTable);
 }
 
 string DatabaseHandler::getWorkDir(){
-    return workDir;
+    return _workDir;
 }
 
 int DatabaseHandler::getWorkdays(string month){

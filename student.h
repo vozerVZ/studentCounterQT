@@ -10,14 +10,14 @@ using namespace std;
 
 class Student{
     private:
-        int age;
-        string name;
+        int _age;
+        string _name;
     public:
-        Student(int _age, string _name);
+        Student(int age, string name);
         int getAge() const;
         string getName() const;
-        void setAge(int _age);
-        void setName(string _name);
+        void setAge(int age);
+        void setName(string name);
         int getCosts(string month, const std::string& city, const std::string& homeAddress,
             const std::string& institute, const std::string& cinema,
             const std::string& coffee, DatabaseHandler database);

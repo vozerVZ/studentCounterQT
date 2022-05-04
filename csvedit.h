@@ -19,7 +19,7 @@ private slots:
     void on_buttonBoxTable_accepted();
 
 private:
-    Ui::CsvEdit *ui;
+    Ui::CsvEdit* _ui;
     std::string _filename;
     DatabaseHandler _db;
     void LoadTable(string workDir);
