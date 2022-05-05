@@ -2,9 +2,7 @@
 #include "csvread.h"
 #include "ui_csvedit.h"
 #include <vector>
-#include <QDebug>
-#include <QFile>
-#include <QTextStream>
+
 using std::vector;
 using std::size_t;
 
@@ -26,9 +24,8 @@ CsvEdit::~CsvEdit(){
 
 void CsvEdit::LoadTable(string workDir){
     _ui->labelTable->setText(QString::fromStdString(_filename));
-    CsvRead reader;
     vector<vector<std::string>> vecTable;
-    reader.readcsv(workDir, _filename, vecTable);
+    _reader.readcsv(workDir, _filename, vecTable);
     _ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     _ui->tableWidget->verticalHeader()->hide();
     _ui->tableWidget->setColumnCount(vecTable[0].size());
@@ -62,21 +59,6 @@ void CsvEdit::on_buttonBoxTable_accepted(){
         vecTable.push_back(row);
         row.clear();
     }
-    WriteTable(vecTable);
-}
-
-void CsvEdit::WriteTable(vector<vector<QString>> data){
-    QString filename = QString::fromStdString(_db.getWorkDir()+_filename);
-    QFile file(filename);
-    if (file.open(QIODevice::WriteOnly)) {
-        QTextStream stream( &file );
-        for (size_t i = 0; i < data.size(); ++i) {
-            for (size_t j = 0; j < data[i].size(); ++j){
-                stream << data[i][j] << ",";
-            }
-            stream << "\n";
-        }
-    }
+    _reader.WriteTable(vecTable, _db.getWorkDir()+_filename);
     _db.reloadTables();
-    //this->parent();
 }

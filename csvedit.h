@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "databasehandler.h"
 #include <QTableWidget>
-
+#include "csvread.h"
 
 namespace Ui {
 class CsvEdit;
@@ -22,8 +22,9 @@ private:
     Ui::CsvEdit* _ui;
     std::string _filename;
     DatabaseHandler _db;
+    CsvRead _reader;
+
     void LoadTable(string workDir);
-    void WriteTable(vector<vector<QString>> data);
 };
 
 #endif // CSVEDIT_H

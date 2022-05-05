@@ -1,4 +1,6 @@
 #include "csvread.h"
+#include <QFile>
+#include <QTextStream>
 
 CsvRead::CsvRead()
 {
@@ -22,4 +24,20 @@ void CsvRead::readcsv(const string& workDir, const string& filename, vector<vect
         arr.push_back(selements);
         selements.clear();
     }
+}
+
+void CsvRead::WriteTable(vector<vector<QString>> data, std::string path){
+    QString filename = QString::fromStdString(path);
+    QFile file(filename);
+    if (file.open(QIODevice::WriteOnly)) {
+        QTextStream stream( &file );
+        for (size_t i = 0; i < data.size(); ++i) {
+            for (size_t j = 0; j < data[i].size(); ++j){
+                stream << data[i][j] << ",";
+            }
+            stream << "\n";
+        }
+    }
+
+    //this->parent();
 }
