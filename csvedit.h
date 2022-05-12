@@ -13,7 +13,7 @@ class CsvEdit;
 class CsvEdit : public QDialog{
     Q_OBJECT
 public:
-    explicit CsvEdit(std::string& filename, DatabaseHandler& db, QWidget *parent = nullptr);
+    explicit CsvEdit(const std::string& filename, DatabaseHandler& db, QWidget *parent = nullptr);
     ~CsvEdit();
 private slots:
     void on_buttonBoxTable_accepted();
@@ -24,7 +24,7 @@ private:
     DatabaseHandler _db;
     CsvRead _reader;
 
-    void LoadTable(string workDir);
+    void loadTable(const string& workDir);
 };
 
 #endif // CSVEDIT_H

@@ -155,6 +155,7 @@ void MainWindow::on_radioButtonAge_toggled(bool checked){
 }
 
 void MainWindow::on_lineName_textEdited(const QString &arg1){
+    checkReadyButton();
 }
 
 void MainWindow::on_lineMonth_textEdited(const QString &arg1){

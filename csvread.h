@@ -14,7 +14,7 @@ class CsvRead
 public:
     CsvRead();
     void readcsv(const string& workDir, const string& filename, vector<vector<string>>& arr);
-    void WriteTable(vector<vector<QString>> data, std::string path);
+    void writeTable(vector<vector<QString>> data, const string& path);
 };
 
 #endif // CSVREAD_H

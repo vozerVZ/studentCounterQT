@@ -25,7 +25,7 @@ void DatabaseHandler::reloadTables(){
     reader.readcsv(_workDir, "Workdays.csv", workdaysTable);
 }
 
-string DatabaseHandler::getWorkDir(){
+string DatabaseHandler::getWorkDir() const{
     return _workDir;
 }
 

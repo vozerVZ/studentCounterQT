@@ -2,13 +2,11 @@
 #include <QFile>
 #include <QTextStream>
 
-CsvRead::CsvRead()
-{
-
+CsvRead::CsvRead(){
 }
 
 void CsvRead::readcsv(const string& workDir, const string& filename, vector<vector<string>>& arr){
-    ifstream fs(workDir+filename);
+    ifstream fs(workDir + filename);
     if (!fs.is_open()){
         throw "File not opened";
     }
@@ -26,11 +24,11 @@ void CsvRead::readcsv(const string& workDir, const string& filename, vector<vect
     }
 }
 
-void CsvRead::WriteTable(vector<vector<QString>> data, std::string path){
+void CsvRead::writeTable(vector<vector<QString>> data, const string& path){
     QString filename = QString::fromStdString(path);
     QFile file(filename);
     if (file.open(QIODevice::WriteOnly)) {
-        QTextStream stream( &file );
+        QTextStream stream(&file);
         for (size_t i = 0; i < data.size(); ++i) {
             for (size_t j = 0; j < data[i].size(); ++j){
                 stream << data[i][j] << ",";
