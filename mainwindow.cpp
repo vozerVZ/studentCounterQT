@@ -15,10 +15,12 @@ using std::cout; using std::cin;
 using std::endl; using std::string;
 using std::filesystem::directory_iterator;
 
-MainWindow::MainWindow(DatabaseHandler& db, QWidget* parent)
-    : QMainWindow(parent)
-    , _ui(new Ui::MainWindow){
+MainWindow::MainWindow(DatabaseHandler& db, CsvRead& reader, QWidget* parent)
+    : QMainWindow(parent),
+    _db(db),
+    _ui(new Ui::MainWindow){
     _db = db;
+    _reader = reader;
     _ui->setupUi(this);
     this->setWindowTitle("Твоя цена");
 }
@@ -34,29 +36,29 @@ void MainWindow::loadTips(){
     _ui->comboBoxCinema->clear();
     _ui->comboBoxInstitute->clear();
     QStringList wordList;
-    for(std::size_t i = 1; i < _db.caffeAndCinemaTable.size(); i++){
-        if(_ui->comboBoxCity->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][0])) == -1){
-            _ui->comboBoxCity->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][0]));
+    for(std::size_t i = 1; i < _reader.getCaffeeTable().size(); i++){
+        if(_ui->comboBoxCity->findText(QString::fromStdString(_reader.getCaffeeTable()[i][0])) == -1){
+            _ui->comboBoxCity->addItem(QString::fromStdString(_reader.getCaffeeTable()[i][0]));
         }
-        if(_ui->comboBoxDistrict->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][1])) == -1){
-            _ui->comboBoxDistrict->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][1]));
+        if(_ui->comboBoxDistrict->findText(QString::fromStdString(_reader.getCaffeeTable()[i][1])) == -1){
+            _ui->comboBoxDistrict->addItem(QString::fromStdString(_reader.getCaffeeTable()[i][1]));
         }
-        if(_ui->comboBoxCafe->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][2])) == -1){
-            _ui->comboBoxCafe->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][2]));
+        if(_ui->comboBoxCafe->findText(QString::fromStdString(_reader.getCaffeeTable()[i][2])) == -1){
+            _ui->comboBoxCafe->addItem(QString::fromStdString(_reader.getCaffeeTable()[i][2]));
         }
-        if(_ui->comboBoxCinema->findText(QString::fromStdString(_db.caffeAndCinemaTable[i][4])) == -1){
-            _ui->comboBoxCinema->addItem(QString::fromStdString(_db.caffeAndCinemaTable[i][4]));
-        }
-    }
-
-    for(std::size_t i = 1; i < _db.instituteTable.size(); i++){
-        if(_ui->comboBoxInstitute->findText(QString::fromStdString(_db.instituteTable[i][1])) == -1){
-            _ui->comboBoxInstitute->addItem(QString::fromStdString(_db.instituteTable[i][1]));
+        if(_ui->comboBoxCinema->findText(QString::fromStdString(_reader.getCaffeeTable()[i][4])) == -1){
+            _ui->comboBoxCinema->addItem(QString::fromStdString(_reader.getCaffeeTable()[i][4]));
         }
     }
 
-    for(std::size_t i = 1; i < _db.workdaysTable.size(); i++){
-        wordList << QString::fromStdString(_db.workdaysTable[i][3]);
+    for(std::size_t i = 1; i < _reader.getInstituteTable().size(); i++){
+        if(_ui->comboBoxInstitute->findText(QString::fromStdString(_reader.getInstituteTable()[i][1])) == -1){
+            _ui->comboBoxInstitute->addItem(QString::fromStdString(_reader.getInstituteTable()[i][1]));
+        }
+    }
+
+    for(std::size_t i = 1; i < _reader.getWorkdaysTable().size(); i++){
+        wordList << QString::fromStdString(_reader.getWorkdaysTable()[i][3]);
     }
     QCompleter *test = new QCompleter(wordList);
     test->setCaseSensitivity(Qt::CaseSensitivity());
@@ -69,7 +71,6 @@ void MainWindow::on_pushButtonCalculate_clicked(){
     if(_ui->radioButtonAge->isChecked()){
         age = _ui->spinBoxAge->value();
     }
-
     std::string name = _ui->lineName->text().toStdString();
     Student student(age, name);
     std::string month = _ui->lineMonth->text().toStdString();
@@ -81,9 +82,9 @@ void MainWindow::on_pushButtonCalculate_clicked(){
     int costs;
     QMessageBox msgBox;
     try {
-        costs = student.getCosts(month, city, homeAddress, institute, cinema, coffee, _db);
+        costs = student.getCosts(month, city, homeAddress, institute, cinema, coffee, _db, _reader);
         if(costs > 0){
-            msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+QString::number(costs) + " рублей в месяц.");
+            msgBox.setText("Привет, " + QString::fromStdString(student.getName()) + "! Ты тратишь "+ QString::number(costs) + " рублей в месяц.");
         }
         else{
             msgBox.setText("Ошибка: данные введены неверно");
@@ -100,7 +101,7 @@ void MainWindow::on_pushButtonCalculate_clicked(){
 }
 
 void MainWindow::checkReadyButton(){
-    if(!_ui->lineName->text().isEmpty() && !_ui->lineMonth->text().isEmpty() && _db.getWorkDir().size() != 0){
+    if(!_ui->lineName->text().isEmpty() && !_ui->lineMonth->text().isEmpty() && _reader.getWorkDir().size() != 0){
         _ui->pushButtonCalculate->setEnabled(true);
     }
 }
@@ -115,15 +116,15 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
         }
     }
     try{
-        _db.setWorkDir(path);
-        _db.reloadTables();
+        _reader.setWorkDir(path);
+        _reader.reloadTables();
         loadTips();
         _ui->buttonEdit->setEnabled(true);
         _ui->label_dir->setText(workDir);
         _ui->label_dir->adjustSize();
     }
     catch(const char* e){
-        _db.setWorkDir("");
+        _reader.setWorkDir("");
         QMessageBox msgBox;
         msgBox.setText(QString(e));
         msgBox.setStyleSheet("color: red;");
@@ -134,10 +135,10 @@ void MainWindow::on_pushButtonWorkDir_clicked(){
 
 void MainWindow::on_buttonEdit_clicked(){
     std::string efilename = _ui->comboBoxFile->currentText().toStdString();
-    CsvEdit csvedit(efilename, _db, this);
+    CsvEdit csvedit(efilename, _db, _reader, this);
     csvedit.setModal(true);
     csvedit.exec();
-    _db.reloadTables();
+    _reader.reloadTables();
     loadTips();
 }
 

@@ -1,18 +1,42 @@
 #include "csvread.h"
 #include <QFile>
 #include <QTextStream>
+#include <iostream>
 
 CsvRead::CsvRead(){
 }
 
-void CsvRead::readcsv(const string& workDir, const string& filename, vector<vector<string>>& arr){
-    ifstream fs(workDir + filename);
+void CsvRead::setWorkDir(string workDir){
+    _workDir = workDir;
+}
+
+string CsvRead::getWorkDir() const{
+    return _workDir;
+}
+
+vector<vector<string>> CsvRead::getCaffeeTable(){
+    return caffeAndCinemaTableRead;
+}
+vector<vector<string>> CsvRead::getCostsTable(){
+    return costsTableRead;
+}
+vector<vector<string>> CsvRead::getInstituteTable(){
+    return instituteTableRead;
+}
+vector<vector<string>> CsvRead::getTransportTable(){
+    return transportTableRead;
+}
+vector<vector<string>> CsvRead::getWorkdaysTable(){
+    return workdaysTableRead;
+}
+
+void CsvRead::readcsv(const string& filename, vector<vector<string>>& arr){
+    ifstream fs(_workDir + filename);
     if (!fs.is_open()){
         throw "File not opened";
     }
     string BigStr;
     vector<string> selements;
-
     while (getline(fs, BigStr)){
         string ThsStr;
         stringstream lineStream(BigStr);
@@ -38,4 +62,18 @@ void CsvRead::writeTable(vector<vector<QString>> data, const string& path){
     }
 
     //this->parent();
+}
+
+void CsvRead::reloadTables(){
+    caffeAndCinemaTableRead.clear();
+    costsTableRead.clear();
+    instituteTableRead.clear();
+    transportTableRead.clear();
+    workdaysTableRead.clear();
+
+    readcsv("Caffe-and-cinema.csv", caffeAndCinemaTableRead);
+    readcsv("Costs.csv", costsTableRead);
+    readcsv("Institute.csv", instituteTableRead);
+    readcsv("Transport.csv", transportTableRead);
+    readcsv("Workdays.csv", workdaysTableRead);
 }

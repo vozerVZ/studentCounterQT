@@ -13,8 +13,24 @@ class CsvRead
 {
 public:
     CsvRead();
-    void readcsv(const string& workDir, const string& filename, vector<vector<string>>& arr);
+    void readcsv(const string& filename, vector<vector<string>>& arr);
     void writeTable(vector<vector<QString>> data, const string& path);
+    void setWorkDir(string workDir);
+    void reloadTables();
+    string getWorkDir() const;
+
+    vector<vector<string>> getCaffeeTable();
+    vector<vector<string>> getCostsTable();
+    vector<vector<string>> getInstituteTable();
+    vector<vector<string>> getTransportTable();
+    vector<vector<string>> getWorkdaysTable();
+private:
+    string _workDir;
+    vector<vector<string>> caffeAndCinemaTableRead;
+    vector<vector<string>> costsTableRead;
+    vector<vector<string>> instituteTableRead;
+    vector<vector<string>> transportTableRead;
+    vector<vector<string>> workdaysTableRead;
 };
 
 #endif // CSVREAD_H

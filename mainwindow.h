@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "databaseHandler.h"
+#include "csvread.h"
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QString>
@@ -14,7 +15,7 @@ class MainWindow : public QMainWindow{
     Q_OBJECT
 
 public:
-    MainWindow(DatabaseHandler& db, QWidget* parent = nullptr);
+    MainWindow(DatabaseHandler& db, CsvRead& reader, QWidget* parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -34,6 +35,8 @@ private slots:
 
 private:
     DatabaseHandler _db;
+    CsvRead _reader;
+
     Ui::MainWindow* _ui;
     void loadTips();
     void checkReadyButton();

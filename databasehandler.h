@@ -5,30 +5,21 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "csvread.h"
 using namespace std;
 
 
 class DatabaseHandler{
     public:
-        void setWorkDir(string workDir);
-        void reloadTables();
-        string getWorkDir() const;
-        int getWorkdays(string month);
-        int getDaysCount(string month);
-        int getOtherMontlyCosts(const string& city, int age);
-        int getHomeFoodCost(const string& city);
-        int getCinemaCost(const string& city, const string& cinema);
-        int getCoffeeCost(const string& city, const string& coffee);
-        int getInstituteDinnerCost(const string& city, const string& institute);
-        int getTransportCost(const string& city, const string& homeAddress, const string& institute);
-        vector<vector<string>> caffeAndCinemaTable;
-        vector<vector<string>> costsTable;
-        vector<vector<string>> instituteTable;
-        vector<vector<string>> transportTable;
-        vector<vector<string>> workdaysTable;
-    private:
-        string _workDir;
-
+        DatabaseHandler();
+        int getWorkdays(string month, CsvRead& r) const;
+        int getDaysCount(string month, CsvRead& r) const;
+        int getOtherMontlyCosts(const string& city, int age, CsvRead& r) const;
+        int getHomeFoodCost(const string& city, CsvRead& r) const;
+        int getCinemaCost(const string& city, const string& cinema, CsvRead& r) const;
+        int getCoffeeCost(const string& city, const string& coffee, CsvRead& r) const;
+        int getInstituteDinnerCost(const string& city, const string& institute, CsvRead& r) const;
+        int getTransportCost(const string& city, const string& homeAddress, const string& institute, CsvRead& r) const;
 };
 
 #endif
