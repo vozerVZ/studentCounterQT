@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QFileDialog>
 #include <QString>
+#include <stdio.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -15,7 +16,7 @@ class MainWindow : public QMainWindow{
     Q_OBJECT
 
 public:
-    MainWindow(DatabaseHandler& db, CsvRead& reader, QWidget* parent = nullptr);
+    MainWindow(DatabaseHandler& db, QWidget* parent = nullptr);
     ~MainWindow();
 
 private slots:
@@ -35,7 +36,11 @@ private slots:
 
 private:
     DatabaseHandler _db;
-    CsvRead _reader;
+    CsvRead* _readerCaffe;
+    CsvRead* _readerCosts;
+    CsvRead* _readerInstitute;
+    CsvRead* _readerTransport;
+    CsvRead* _readerWorkdays;
 
     Ui::MainWindow* _ui;
     void loadTips();

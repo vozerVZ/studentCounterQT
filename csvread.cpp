@@ -2,8 +2,9 @@
 #include <QFile>
 #include <QTextStream>
 #include <iostream>
-
-CsvRead::CsvRead(){
+#include <QDebug>
+CsvRead::CsvRead(const string& filename){
+    _filename = filename;
 }
 
 void CsvRead::setWorkDir(string workDir){
@@ -14,48 +15,38 @@ string CsvRead::getWorkDir() const{
     return _workDir;
 }
 
-vector<vector<string>> CsvRead::getCaffeeTable(){
-    return caffeAndCinemaTableRead;
-}
-vector<vector<string>> CsvRead::getCostsTable(){
-    return costsTableRead;
-}
-vector<vector<string>> CsvRead::getInstituteTable(){
-    return instituteTableRead;
-}
-vector<vector<string>> CsvRead::getTransportTable(){
-    return transportTableRead;
-}
-vector<vector<string>> CsvRead::getWorkdaysTable(){
-    return workdaysTableRead;
+vector<vector<string>> CsvRead::getTable() const{
+    return _table;
 }
 
-void CsvRead::readcsv(const string& filename, vector<vector<string>>& arr){
-    ifstream fs(_workDir + filename);
+void CsvRead::readcsv(){
+    ifstream fs(_workDir + _filename);
     if (!fs.is_open()){
         throw "File not opened";
     }
     string BigStr;
     vector<string> selements;
+    _table.clear();
     while (getline(fs, BigStr)){
         string ThsStr;
         stringstream lineStream(BigStr);
         while (getline(lineStream, ThsStr, ',')){
             selements.push_back(ThsStr);
         }
-        arr.push_back(selements);
+        _table.push_back(selements);
         selements.clear();
     }
 }
 
-void CsvRead::writeTable(vector<vector<QString>> data, const string& path){
-    QString filename = QString::fromStdString(path);
+void CsvRead::writeTable(vector<vector<QString>>& vecTable){
+    QString filename = QString::fromStdString(_workDir.append(_filename));
+
     QFile file(filename);
     if (file.open(QIODevice::WriteOnly)) {
         QTextStream stream(&file);
-        for (size_t i = 0; i < data.size(); ++i) {
-            for (size_t j = 0; j < data[i].size(); ++j){
-                stream << data[i][j] << ",";
+        for (size_t i = 0; i < vecTable.size(); ++i) {
+            for (size_t j = 0; j < vecTable[i].size(); ++j){
+                stream << vecTable[i][j] << ",";
             }
             stream << "\n";
         }
@@ -64,16 +55,3 @@ void CsvRead::writeTable(vector<vector<QString>> data, const string& path){
     //this->parent();
 }
 
-void CsvRead::reloadTables(){
-    caffeAndCinemaTableRead.clear();
-    costsTableRead.clear();
-    instituteTableRead.clear();
-    transportTableRead.clear();
-    workdaysTableRead.clear();
-
-    readcsv("Caffe-and-cinema.csv", caffeAndCinemaTableRead);
-    readcsv("Costs.csv", costsTableRead);
-    readcsv("Institute.csv", instituteTableRead);
-    readcsv("Transport.csv", transportTableRead);
-    readcsv("Workdays.csv", workdaysTableRead);
-}

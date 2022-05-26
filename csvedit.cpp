@@ -10,9 +10,10 @@ using std::size_t;
 CsvEdit::CsvEdit(const std::string& filename, DatabaseHandler& db, CsvRead& reader, QWidget* parent) :
     QDialog(parent),
     _db(db),
+    _reader(reader),
     _ui(new Ui::CsvEdit){
-    _filename = filename;
-    _db = db;
+    _filename = filename,
+    _db = db,
     _reader = reader,
     _ui->setupUi(this);
     loadTable();
@@ -25,8 +26,8 @@ CsvEdit::~CsvEdit(){
 
 void CsvEdit::loadTable(){
     _ui->labelTable->setText(QString::fromStdString(_filename));
-    vector<vector<std::string>> vecTable;
-    _reader.readcsv(_filename, vecTable);
+    vector<vector<std::string>> vecTable = _reader.getTable();
+
     _ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     _ui->tableWidget->verticalHeader()->hide();
     _ui->tableWidget->setColumnCount(vecTable[0].size());
@@ -60,6 +61,6 @@ void CsvEdit::on_buttonBoxTable_accepted(){
         vecTable.push_back(row);
         row.clear();
     }
-    _reader.writeTable(vecTable, _reader.getWorkDir() + _filename);
-    _reader.reloadTables();
+    _reader.writeTable(vecTable);
 }
+
